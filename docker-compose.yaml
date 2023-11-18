@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  db_api:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: ${API_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${API_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${API_POSTGRES_DB}
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data_api:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data_api:
