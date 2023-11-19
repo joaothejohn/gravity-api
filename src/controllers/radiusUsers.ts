@@ -13,8 +13,6 @@ export async function getAllRadiusUsers(req: Request, res: Response) {
   res.json(users);
 }
 
-interface IPlanDomainProps { plan, planId: string, domainId: string, password: string }
-
 export async function getRadiusUsers(req: Request, res: Response) {
   const { domainId } = req.params;
   const pageSize = Number(req.query.pageSize as string) || 100;
@@ -38,12 +36,7 @@ export async function getRadiusUsers(req: Request, res: Response) {
     take: pageSize,
   });
 
-  const usersWithoutPlanDomainId = users.map(({ plan, planId, domainId, password, ...user }: IPlanDomainProps) => {
-    const { domainId: nestedDomainId, ...restOfPlan } = plan || {};
-    return { ...user, plan: restOfPlan };
-  });
-  
-  res.json(usersWithoutPlanDomainId);
+  res.json(users);
 }
 
 export async function getRadiusUserById(req: Request, res: Response) {
