@@ -22,7 +22,7 @@ app.use("/radiususers", radiusUsersRouter);
 app.use("/teams", teamsRouter);
 app.use("/auth", authRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on http://0.0.0.0:${PORT} - ${process.env.NODE_ENV} Evironment`);
