@@ -11,6 +11,7 @@
     "prisma-generate": "npx prisma generate --schema src/prisma/schema.prisma",
     "prisma-migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma",
     "prisma-create-migration": "npx prisma migrate dev --name $MIGRATION_NAME --schema src/prisma/schema.prisma",
+    "heroku-postbuild": "npm run prisma-generate",
     "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
