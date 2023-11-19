@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon",
+    "start:staging": "npm run build && npm start -- --env=staging",
+    "start:prod": "npm run build && npm start -- --env=production",
     "prisma-generate": "npx prisma generate --schema src/prisma/schema.prisma",
     "prisma-migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma",
     "prisma-create-migration": "npx prisma migrate dev --name $MIGRATION_NAME --schema src/prisma/schema.prisma",
