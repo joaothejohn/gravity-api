@@ -22,4 +22,4 @@ jobs:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.VPS_SSH_KEY }}
-        script: "rsync -r --delete-after --quiet ${{ github.workspace }} /var/www/server"
+        script: "rsync -r --delete-after ${{ github.workspace }} /var/www/server"
