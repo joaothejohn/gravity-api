@@ -16,13 +16,13 @@ jobs:
     - name: List workspace contents
       run: ls -la ${{ github.workspace }}
 
+    - name: Install SSH Agent
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
     - name: Debug SSH connection
-      run: |
-        echo "${{ secrets.VPS_SSH_KEY }}" > /tmp/deploy_key
-        chmod 600 /tmp/deploy_key
-        ls -la /tmp/deploy_key
-        cat /tmp/deploy_key
-        ssh -v -i /tmp/deploy_key ${VPS_USERNAME}@${VPS_HOST} "ls /var/www/server"
+      run: ssh -v -o StrictHostKeyChecking=no ${VPS_USERNAME}@${VPS_HOST} "ls /var/www/server"
 
     - name: Deploy to VPS
       uses: appleboy/ssh-action@master
