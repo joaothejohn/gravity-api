@@ -13,23 +13,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: List workspace contents
-      run: ls -la ${{ github.workspace }}
-
-    - name: Debug SSH connection
-      env:
-        VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
-        VPS_HOST: ${{ secrets.VPS_HOST }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh -v -o StrictHostKeyChecking=no ${VPS_USERNAME}@${VPS_HOST} "ls /var/www/server"
-
-    - name: Deploy to VPS
+    - name: Copy files to VPS
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USERNAME }}
-        key: ${{ secrets.VPS_SSH_KEY }}
-        script: "rsync -r --delete-after ${{ github.workspace }} /var/www/server"
+        password: ${{ secrets.VPS_PASSWORD }}
+        script: |
+          scp -r . ${VPS_USERNAME}@${VPS_HOST}:/var/www/server
