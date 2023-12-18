@@ -20,4 +20,4 @@ jobs:
         username: ${{ secrets.VPS_USERNAME }}
         password: ${{ secrets.VPS_PASSWORD }}
         script: |
-          scp -r . ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/var/www/server
+          scp -o StrictHostKeyChecking=no -r . ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/var/www/server
