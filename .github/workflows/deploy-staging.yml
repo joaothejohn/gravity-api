@@ -17,6 +17,9 @@ jobs:
       run: ls -la ${{ github.workspace }}
 
     - name: Debug SSH connection
+      env:
+        VPS_USERNAME: ${{ secrets.VPS_USERNAME }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
