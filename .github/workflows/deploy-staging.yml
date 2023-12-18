@@ -16,15 +16,12 @@ jobs:
     - name: List workspace contents
       run: ls -la ${{ github.workspace }}
 
-    - name: Setup SSH Keys
-      uses: webfactory/ssh-key@v4
-      with:
-        key: ${{ secrets.VPS_SSH_KEY }}
-        name: id_rsa # This is the default name and it will work for most cases
-        known_hosts: ${{ secrets.VPS_HOST }}
-
     - name: Debug SSH connection
-      run: ssh -v -o StrictHostKeyChecking=no ${VPS_USERNAME}@${VPS_HOST} "ls /var/www/server"
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh -v -o StrictHostKeyChecking=no ${VPS_USERNAME}@${VPS_HOST} "ls /var/www/server"
 
     - name: Deploy to VPS
       uses: appleboy/ssh-action@master
