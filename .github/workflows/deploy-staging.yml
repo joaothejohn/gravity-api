@@ -16,6 +16,9 @@ jobs:
     - name: List workspace contents
       run: ls -la ${{ github.workspace }}
 
+    - name: Debug SSH connection
+      run: ssh -v -i ${{ secrets.VPS_SSH_KEY }} ${VPS_USERNAME}@${VPS_HOST} "ls /var/www/server"
+
     - name: Deploy to VPS
       uses: appleboy/ssh-action@master
       with:
