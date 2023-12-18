@@ -16,10 +16,12 @@ jobs:
     - name: List workspace contents
       run: ls -la ${{ github.workspace }}
 
-    - name: Install SSH Agent
-      uses: webfactory/ssh-agent@v0.5.4
+    - name: Setup SSH Keys
+      uses: shivammathur/ssh-key@v4
       with:
-        ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        name: id_rsa # This is the default name and it will work for most cases
+        known_hosts: ${{ secrets.VPS_HOST }}
 
     - name: Debug SSH connection
       run: ssh -v -o StrictHostKeyChecking=no ${VPS_USERNAME}@${VPS_HOST} "ls /var/www/server"
