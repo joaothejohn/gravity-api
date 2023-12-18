@@ -2,17 +2,30 @@ import { Expose } from 'class-transformer';
 
 export class AuthResponse {
   @Expose({ name: 'control:Cleartext-Password' })
-  plainTextPassword: string;
+  'control:Cleartext-Password': string;
 
   @Expose({ name: 'Framed-IP-Address' })
-  framedIPAddress: string;
+  'Framed-IP-Address': string;
 
   @Expose({ name: 'Mikrotik-Rate-Limit' })
-  mikrotikRateLimit: string;
+  'Mikrotik-Rate-Limit': string;
 
-  constructor(password: string) {
-    this.plainTextPassword = password;
-    this.framedIPAddress = '10.20.11.2';
-    this.mikrotikRateLimit = '10M/10M 50M/50M 25M/25M 160/160 7 5M/5M';
+  constructor(password: string, ipAddress: string, rateLimit: string) {
+    this['control:Cleartext-Password'] = password;
+    this['Framed-IP-Address'] = ipAddress;
+    this['Mikrotik-Rate-Limit'] = rateLimit;
   }
+}
+
+export function createMikrotikRateLimit(user: any) {
+  const { plan } = user;
+  const rateLimit = [
+    plan.maxLimit,
+    plan.burstLimit,
+    plan.burstThreshold,
+    plan.burstTime,
+    plan.priority
+  ].join(' ');
+
+  return rateLimit;
 }

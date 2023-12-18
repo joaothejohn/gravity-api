@@ -1,4 +1,4 @@
-import { AuthResponse } from "../utils/authResponse";
+import { AuthResponse, createMikrotikRateLimit } from "../utils/authResponse";
 import prisma from "../utils/prismaClient"
 
 export async function authorizeUser(username: string, calledStationId: string) {
@@ -9,11 +9,15 @@ export async function authorizeUser(username: string, calledStationId: string) {
     where: {
       domainId: router.domainId,
       username: username
+    },
+    include: {
+      plan: true
     }
   });
+    
   if (!user) throw new Error('User not found');
-  const response = new AuthResponse(user.password)
+  const response = new AuthResponse(user.password, user.ip, createMikrotikRateLimit(user));
 
-  response.framedIPAddress = user.ip;
+  response['Framed-IP-Address'] = user.ip;
   return response;
 }
