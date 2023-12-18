@@ -17,7 +17,7 @@ jobs:
       run: ls -la ${{ github.workspace }}
 
     - name: Setup SSH Keys
-      uses: shivammathur/ssh-key@v4
+      uses: webfactory/ssh-key@v4
       with:
         key: ${{ secrets.VPS_SSH_KEY }}
         name: id_rsa # This is the default name and it will work for most cases
